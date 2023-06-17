@@ -10,7 +10,6 @@ sectionHeader.append(divHContainer);
 
 let divHRow = document.createElement('div');
 divHRow.classList = "header__row";
-divHContainer.append(divHRow);
 
 let buttonHDelAll = document.createElement('button');
 buttonHDelAll.classList = "header__delete-all";
@@ -29,10 +28,6 @@ let buttonHAdd = document.createElement('button');
 buttonHAdd.classList = "header__add";
 buttonHAdd.innerHTML = 'Add';
 divHRow.append(buttonHAdd);
-
-divHRow = document.createElement('div');
-divHRow.classList = "header__row";
-divHContainer.append(divHRow);
 
 let pHAll = document.createElement('p');
 pHAll.classList = "header__all";
@@ -56,6 +51,8 @@ inputHSearch.setAttribute('type', 'text');
 inputHSearch.setAttribute('placeholder', 'Search...');
 divHRow.append(inputHSearch);
 
+divHContainer.append(divHRow);
+
 let sectionMain = document.createElement('section');
 sectionMain.classList = "main";
 root.append(sectionMain);
@@ -65,20 +62,20 @@ divMContainer.setAttribute('class', 'main__container container');
 sectionMain.append(divMContainer);
 
 let divMCell, buttonMCheck, pMText, divMRight, buttonMDel, pMDate;
-let amountTodo = 0, amountCheck = 0;
+let amountTodo = 0, amountCheck = 0, amountAllTime = -1;
 
-buttonHAdd.addEventListener('click', function() {
-    const text = inputHEnter.value;
-    if (text === '') return;
-    var today = new Date();
-    var date = today.toLocaleTimeString();
-
+function addElement(text, date, bool) {
     divMCell = document.createElement('div');
     divMCell.classList = "main__cell";
-    divMContainer.append(divMCell);
+    if (bool === true) {
+        divMCell.classList.add('check');
+        amountCheck++;
+        pHCompleted.innerHTML = 'Compleeted: ' + amountCheck;
+    }
 
     buttonMCheck = document.createElement('button');
     buttonMCheck.classList = "cell__check";
+    if (bool === true) buttonMCheck.innerHTML = '✓';
     divMCell.append(buttonMCheck);
 
     pMText = document.createElement('p');
@@ -100,47 +97,175 @@ buttonHAdd.addEventListener('click', function() {
     pMDate.innerHTML = date;
     divMRight.append(pMDate);
 
+    divMContainer.append(divMCell);
+
     amountTodo++;
     pHAll.innerHTML = 'All: ' + amountTodo;
-});
+}
+
+if (localStorage.length > 0) {
+    const objOld = {};
+    const arrKeys = Object.keys(localStorage);
+    arrKeys.sort((a, b) => {
+        const numA = parseInt(a.slice(4));
+        const numB = parseInt(b.slice(4));
+        return numA - numB;
+    });
+        
+    for (let key of arrKeys) {
+      let value = localStorage.getItem(key);
+      objOld[key] = JSON.parse(value);
+    }
+    for (let i in objOld) {
+        addElement(objOld[i].text, objOld[i].date, objOld[i].check);
+    }
+
+    amountAllTime = parseInt(arrKeys.at(-1).slice(4));
+}
+
 
 divMContainer.addEventListener('click', (event) => {
-    if (event.target.classList.contains('cell__check')) {
-        if (event.target.innerHTML === '✓') {
-            event.target.innerHTML = '';
-            event.target.parentElement.classList.remove('check');
-            amountCheck--;
-            pHCompleted.innerHTML = 'Compleeted: ' + amountCheck;
-        } else {
-            event.target.innerHTML = '✓';
-            event.target.parentElement.classList.add('check');
-            amountCheck++;
-            pHCompleted.innerHTML = 'Compleeted: ' + amountCheck;
-        }
-    }
-
-    if (event.target.classList.contains('cell__delete')) {
-        let check = event.target.parentElement.previousElementSibling.previousElementSibling;
-        if (check.innerHTML === '✓') {
-            amountCheck--;
-            pHCompleted.innerHTML = 'Compleeted: ' + amountCheck;
-        }
-        event.target.parentElement.parentElement.remove();
-        amountTodo--;
-        pHAll.innerHTML = 'All: ' + amountTodo;
-    }
+    let et = event.target;
+    if (et.classList.contains('cell__check')) cellCheck(et);
+    if (et.classList.contains('cell__delete')) cellDelete(et);
 });
 
-buttonHDelAll.addEventListener('click', () => {
-    while (divMContainer.firstElementChild) {
-        divMContainer.firstElementChild.remove();
-        amountTodo--;
+function cellCheck(et) {
+    // const objAll = {};
+    // for(let i = 0; i < amountAllTime; i++) {
+    //     let name = 'todo' + i;
+    //     let str = localStorage.getItem(name);
+    //     objAll[name] = JSON.parse(str);
+    // }
+    const arrKeys = Object.keys(localStorage);
+    const objAll = {};
+    for (let key of arrKeys) {
+      let value = localStorage.getItem(key);
+      objAll[key] = JSON.parse(value);
     }
+
+    if (et.innerHTML === '✓') {
+        et.innerHTML = '';
+        et.parentElement.classList.remove('check');
+        amountCheck--;
+        pHCompleted.innerHTML = 'Compleeted: ' + amountCheck;
+    } else {
+        et.innerHTML = '✓';
+        et.parentElement.classList.add('check');
+        amountCheck++;
+        pHCompleted.innerHTML = 'Compleeted: ' + amountCheck;
+    }
+
+    // let n = -1;
+    // for (let i in objAll) {
+    //     n++;
+    //     if (objAll[i] === null) continue;
+    //     if (et.nextElementSibling.innerHTML === objAll[i].text) {
+    //         if (et.innerHTML === '') objAll[i].check = false;
+    //         else objAll[i].check = true;
+    //         let name = 'todo' + n;
+    //         let objJSON = JSON.stringify(objAll[i]);  
+    //         localStorage.setItem(name, objJSON);
+    //     }
+    // }
+    for (let i in objAll) {
+        if (et.nextElementSibling.innerHTML === objAll[i].text) {
+            if (et.innerHTML === '') objAll[i].check = false;
+            else objAll[i].check = true;
+            let objJSON = JSON.stringify(objAll[i]);  
+            localStorage.setItem(i, objJSON);
+        }
+    }
+}
+function cellDelete(et) {
+    const arrKeys = Object.keys(localStorage);
+    const objAll = {};
+    for (let key of arrKeys) {
+      let value = localStorage.getItem(key);
+      objAll[key] = JSON.parse(value);
+    }
+
+    let check = et.parentElement.previousElementSibling.previousElementSibling;
+    if (check.innerHTML === '✓') {
+        amountCheck--;
+        pHCompleted.innerHTML = 'Compleeted: ' + amountCheck;
+    }
+    et.parentElement.parentElement.remove();
+    amountTodo--;
+    pHAll.innerHTML = 'All: ' + amountTodo;
+
+    for (let i in objAll) {
+        if (et.parentElement.previousElementSibling.innerHTML === objAll[i].text) {
+            localStorage.removeItem(i);
+        }
+    }
+}
+
+divHContainer.addEventListener('click', (event) => {
+    let et = event.target;
+    if (et.classList.contains('header__add')) addNew();
+    if (et.classList.contains('header__delete-all')) delAll();
+    if (et.classList.contains('header__delete-last')) delLast();
+    if (et.classList.contains('header__show-all')) showAll();
+    if (et.classList.contains('header__show-completed')) showCompleted();
+});
+
+function addNew() {
+    const arrKeys = Object.keys(localStorage);
+    const objAll = {};
+    for (let key of arrKeys) {
+      let value = localStorage.getItem(key);
+      objAll[key] = JSON.parse(value);
+    }
+
+    const text = inputHEnter.value;
+    if (text === '') return;
+    for (let i in objAll) {
+        if (text === objAll[i].text) return;
+    }
+    let today = new Date();
+    let date = today.toLocaleTimeString();
+
+    const obj = {
+        text: '',
+        date: '',
+        check: false,
+        setText: function(text) {
+            this.text = text;
+        },
+        setDate: function(date) {
+            this.date = date;
+        },
+    };
+    obj.setText(text);
+    obj.setDate(date);
+    let name = 'todo' + ++amountAllTime;
+    let objJSON = JSON.stringify(obj);
+    localStorage.setItem(name, objJSON);
+    addElement(text, date, false);
+}
+function delAll() {
+    divMContainer.innerHTML = '';
+    localStorage.clear();
+    amountTodo = 0;
     pHAll.innerHTML = 'All: ' + amountTodo;
     amountCheck = 0;
     pHCompleted.innerHTML = 'Compleeted: ' + amountCheck;
-});
-buttonHDelLast.addEventListener('click', () => {
+    amountAllTime = -1;
+}
+function delLast() {
+    const arrKeys = Object.keys(localStorage);
+    const objAll = {};
+    for (let key of arrKeys) {
+      let value = localStorage.getItem(key);
+      objAll[key] = JSON.parse(value);
+    }
+    for (let i in objAll) {
+        if (divMContainer.lastElementChild.children[1].innerHTML === objAll[i].text) {
+            localStorage.removeItem(i);
+        }
+    }
+
     if (divMContainer.lastChild.firstChild.innerHTML === '✓') {
         amountCheck--;
         pHCompleted.innerHTML = 'Compleeted: ' + amountCheck;
@@ -148,22 +273,26 @@ buttonHDelLast.addEventListener('click', () => {
     divMContainer.lastElementChild.remove();
     amountTodo--;
     pHAll.innerHTML = 'All: ' + amountTodo;
-});
-
-buttonHShowAll.addEventListener('click', () => {
+}
+function showAll() {
     for (let i of divMContainer.children) {
         i.style.display = 'flex';
     }
-});
-buttonHShowCompleted.addEventListener('click', () => {
+}
+function showCompleted() {
     for (let i of divMContainer.children) {
         if (!i.classList.contains('check')) {
             i.style.display = 'none';
         }
     }
+}
+
+divHContainer.addEventListener('input', (event) => {
+    let et = event.target;
+    if (et.classList.contains('header__search')) search();
 });
 
-inputHSearch.addEventListener('input', () => {
+function search() {
     let inputValue = inputHSearch.value;
     if (inputValue.length > 2) {
         const cellTexts = document.getElementsByClassName('cell__text');
@@ -179,5 +308,11 @@ inputHSearch.addEventListener('input', () => {
         for (let i of divMContainer.children) {
             i.style.display = 'flex';
         }
+    }
+}
+
+divHContainer.addEventListener('keydown', (event) => {
+    if (event.target.classList.contains('header__enter')) {
+        if (event.keyCode === 13) addNew();
     }
 });
