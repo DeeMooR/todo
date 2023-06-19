@@ -131,12 +131,6 @@ divMContainer.addEventListener('click', (event) => {
 });
 
 function cellCheck(et) {
-    // const objAll = {};
-    // for(let i = 0; i < amountAllTime; i++) {
-    //     let name = 'todo' + i;
-    //     let str = localStorage.getItem(name);
-    //     objAll[name] = JSON.parse(str);
-    // }
     const arrKeys = Object.keys(localStorage);
     const objAll = {};
     for (let key of arrKeys) {
@@ -156,18 +150,6 @@ function cellCheck(et) {
         pHCompleted.innerHTML = 'Compleeted: ' + amountCheck;
     }
 
-    // let n = -1;
-    // for (let i in objAll) {
-    //     n++;
-    //     if (objAll[i] === null) continue;
-    //     if (et.nextElementSibling.innerHTML === objAll[i].text) {
-    //         if (et.innerHTML === '') objAll[i].check = false;
-    //         else objAll[i].check = true;
-    //         let name = 'todo' + n;
-    //         let objJSON = JSON.stringify(objAll[i]);  
-    //         localStorage.setItem(name, objJSON);
-    //     }
-    // }
     for (let i in objAll) {
         if (et.nextElementSibling.innerHTML === objAll[i].text) {
             if (et.innerHTML === '') objAll[i].check = false;
