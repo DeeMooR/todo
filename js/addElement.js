@@ -4,7 +4,7 @@ import { divMContainer, pHAll, pHCompleted } from "./createDOM.js";
 let divMCell, buttonMCheck, pMText, divMRight, buttonMDel, pMDate;
 export function addElement(text, date, bool) {
     divMCell = document.createElement('div');
-    divMCell.classList = "main__cell";
+    divMCell.classList = "cell";
     if (bool === true) {
         divMCell.classList.add('check');
         pHCompleted.innerHTML = 'Compleeted: ' + ++amount.amountCheck;
@@ -35,6 +35,6 @@ export function addElement(text, date, bool) {
     divMRight.append(pMDate);
 
     divMContainer.append(divMCell);
-    
+
     pHAll.innerHTML = 'All: ' + ++amount.amountTodo;
 }

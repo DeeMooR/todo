@@ -1,0 +1,152 @@
+// color
+$blue: #10e8d0;
+$blue-hover: #0dc6b0;
+$blue-active: #0ba492;
+$bg: #d6d6d6;
+$btn-color: #666;
+$btn-color-active: #eee;
+$btn-border: #222;
+$cell-active: #757575;
+$cell-bg-text: #fff;
+
+%flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+%flex-space-between-center {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+body {
+    background-color: $bg;
+}
+.container {
+    margin: 0 auto;
+    max-width: 1200px;
+    padding: 0px 20px;
+}
+
+button {
+    @extend %flex-center;
+    height: 60px;
+    border: 4px solid $btn-border;
+    border-radius: 15px;
+    background-color: $blue;
+    color: $btn-color;
+    font-size: 24px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+    &:hover {
+        background-color: $blue-hover;
+        color: $btn-color-active;
+        transition: 0.3s ease-in-out;
+    }
+    &:active {
+        background-color: $blue-active;
+        color: $btn-color-active;
+        border: none;
+        transition: 0.3s ease-in-out;
+    }
+}
+
+input {
+    height: 60px;
+    padding: 0 0 0 20px;
+    border: 4px solid $btn-border;
+    border-radius: 15px;
+    font-size: 24px;
+    box-sizing: border-box;
+}
+
+#root {
+    .header {
+        .header__container {
+            .header__row {
+                @extend %flex-space-between-center;
+                flex-wrap: wrap;
+                padding: 20px 0 0 0;
+                
+                .header__delete-all { width: 17%; }
+                .header__delete-last { width: 17%; }
+                .header__enter { width: 40%; }
+                .header__add { width: 17%; }
+                .header__show-all { width: 18%; }
+                .header__show-completed { width: 24%; }
+                .header__search { width: 20%; }
+                .header__all {
+                    width: 10%;
+                    font-size: 24px;
+                }
+                .header__completed {
+                    width: 15%;
+                    font-size: 24px;
+                }
+            }
+        }
+    }
+    .main {
+        .main__container {
+            max-width: 700px;
+            padding: 30px 20px 0 20px;
+            .cell {
+                @extend %flex-space-between-center;
+                height: 160px;
+                padding: 0 20px 0 20px;
+                margin: 0 0 30px 0;
+                border: 4px solid $btn-border;
+                border-radius: 20px;
+                transition: 0.3s ease-in-out;
+                &.check {
+                    background-color: $cell-active;
+                    transition: 0.3s ease-in-out;
+                    &__text {
+                        text-decoration: line-through;
+                        transition: 0.3s ease-in-out;
+                    }
+                }
+                &__check {
+                    @extend %flex-center;
+                    width: 10%;
+                    height: 45px;
+                    border-radius: 10px;
+                    font-weight: bold;
+                }
+                &__text {
+                    @extend %flex-center;
+                    width: 65%;
+                    height: 70px;
+                    background-color: $cell-bg-text;
+                    border-radius: 15px;
+                    font-size: 24px;
+                }
+                &__right {
+                    width: 20%;
+                    height: 120px;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+                    align-items: end;
+                    .cell__delete {
+                        @extend %flex-center;
+                        width: 50%;
+                        height: 45px;
+                        border-radius: 10px;
+                        font-weight: bold;
+                    }
+                    .cell__date {
+                        @extend %flex-center;
+                        width: 100%;
+                        height: 40px;
+                        margin: 0;
+                        background-color: $cell-bg-text;
+                        border-radius: 10px;
+                        font-size: 24px;
+                    }
+                }
+            }
+        }
+    }
+}

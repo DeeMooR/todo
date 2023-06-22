@@ -1,150 +1,141 @@
-body {
-    background-color: #d6d6d6;
+#root .main .main__container .cell__right .cell__date, #root .main .main__container .cell__right .cell__delete, #root .main .main__container .cell__text, #root .main .main__container .cell__check, button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
+#root .main .main__container .cell, #root .header .header__container .header__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+body {
+  background-color: #d6d6d6;
+}
+
 .container {
-    margin: 0 auto;
-    max-width: 1200px;
-    padding: 0px 20px;
+  margin: 0 auto;
+  max-width: 1200px;
+  padding: 0px 20px;
 }
 
 button {
-    height: 60px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 4px solid #222;
-    border-radius: 15px;
-    background-color: #10e8d0;
-    color: #666;
-    font-size: 24px;
-    cursor: pointer;
-    transition: 0.3s ease-in-out;
+  height: 60px;
+  border: 4px solid #222;
+  border-radius: 15px;
+  background-color: #10e8d0;
+  color: #666;
+  font-size: 24px;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
 }
 button:hover {
-    background-color: #0dc6b0;
-    color: #eee;
-    transition: 0.3s ease-in-out;
+  background-color: #0dc6b0;
+  color: #eee;
+  transition: 0.3s ease-in-out;
 }
 button:active {
-    background-color: #0ba492;
-    color: #eee;
-    border: none;
-    transition: 0.3s ease-in-out;
+  background-color: #0ba492;
+  color: #eee;
+  border: none;
+  transition: 0.3s ease-in-out;
 }
 
 input {
-    height: 60px;
-    padding: 0 0 0 20px;
-    border: 4px solid #222;
-    border-radius: 15px;
-    font-size: 24px;
-    box-sizing: border-box;
+  height: 60px;
+  padding: 0 0 0 20px;
+  border: 4px solid #222;
+  border-radius: 15px;
+  font-size: 24px;
+  box-sizing: border-box;
 }
 
-.header__row {
-    padding: 20px 0 0 0;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
+#root .header .header__container .header__row {
+  flex-wrap: wrap;
+  padding: 20px 0 0 0;
 }
-.header__delete-all {
-    width: 17%;
+#root .header .header__container .header__row .header__delete-all {
+  width: 17%;
 }
-.header__delete-last {
-    width: 17%;
+#root .header .header__container .header__row .header__delete-last {
+  width: 17%;
 }
-.header__enter {
-    width: 40%;
+#root .header .header__container .header__row .header__enter {
+  width: 40%;
 }
-.header__add {
-    width: 17%;
+#root .header .header__container .header__row .header__add {
+  width: 17%;
 }
-.header__all {
-    width: 10%;
-    font-size: 24px;
+#root .header .header__container .header__row .header__show-all {
+  width: 18%;
 }
-.header__completed {
-    width: 15%;
-    font-size: 24px;
+#root .header .header__container .header__row .header__show-completed {
+  width: 24%;
 }
-.header__show-all {
-    width: 18%;
+#root .header .header__container .header__row .header__search {
+  width: 20%;
 }
-.header__show-completed {
-    width: 24%;
+#root .header .header__container .header__row .header__all {
+  width: 10%;
+  font-size: 24px;
 }
-.header__search {
-    width: 20%;
+#root .header .header__container .header__row .header__completed {
+  width: 15%;
+  font-size: 24px;
 }
-
-.main__container {
-    max-width: 700px;
-    padding: 30px 20px 0 20px;
+#root .main .main__container {
+  max-width: 700px;
+  padding: 30px 20px 0 20px;
 }
-.main__cell {
-    height: 160px;
-    padding: 0 20px 0 20px;
-    margin: 0 0 30px 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border: 4px solid #222;
-    border-radius: 20px;
-    transition: 0.3s ease-in-out;
+#root .main .main__container .cell {
+  height: 160px;
+  padding: 0 20px 0 20px;
+  margin: 0 0 30px 0;
+  border: 4px solid #222;
+  border-radius: 20px;
+  transition: 0.3s ease-in-out;
 }
-.cell__check {
-    width: 10%;
-    height: 45px;
-    border-radius: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: bold;
+#root .main .main__container .cell.check {
+  background-color: #757575;
+  transition: 0.3s ease-in-out;
 }
-.check {
-    background-color: #757575;
-    transition: 0.3s ease-in-out;
+#root .main .main__container .cell.check__text {
+  text-decoration: line-through;
+  transition: 0.3s ease-in-out;
 }
-.check .cell__text {
-    text-decoration: line-through;
-    transition: 0.3s ease-in-out;
+#root .main .main__container .cell__check {
+  width: 10%;
+  height: 45px;
+  border-radius: 10px;
+  font-weight: bold;
 }
-.cell__text {
-    width: 65%;
-    height: 70px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #fff;
-    border-radius: 15px;
-    font-size: 24px;
+#root .main .main__container .cell__text {
+  width: 65%;
+  height: 70px;
+  background-color: #fff;
+  border-radius: 15px;
+  font-size: 24px;
 }
-.cell__right {
-    width: 20%;
-    height: 120px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: end;
+#root .main .main__container .cell__right {
+  width: 20%;
+  height: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: end;
 }
-.cell__delete {
-    width: 50%;
-    height: 45px;
-    border-radius: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: bold;
+#root .main .main__container .cell__right .cell__delete {
+  width: 50%;
+  height: 45px;
+  border-radius: 10px;
+  font-weight: bold;
 }
-.cell__date {
-    width: 100%;
-    height: 40px;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #fff;
-    border-radius: 10px;
-    font-size: 24px;
+#root .main .main__container .cell__right .cell__date {
+  width: 100%;
+  height: 40px;
+  margin: 0;
+  background-color: #fff;
+  border-radius: 10px;
+  font-size: 24px;
 }
