@@ -1,4 +1,7 @@
-function fromLocalStorage() {
+import { amount } from "./script.js";
+import { addElement } from "./addElement.js";
+
+export function fromLocalStorage() {
     const objOld = {};
     const arrKeys = Object.keys(localStorage);
     arrKeys.sort((a, b) => {
@@ -17,7 +20,3 @@ function fromLocalStorage() {
 
     amount.amountAllTime = parseInt(arrKeys.at(-1).slice(4));
 }
-
-import { amount } from "./script.js";
-import { addElement } from "./addElement.js";
-export { fromLocalStorage };

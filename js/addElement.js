@@ -1,11 +1,13 @@
+import { amount } from "./script.js";
+import { divMContainer, pHAll, pHCompleted } from "./createDOM.js";
+
 let divMCell, buttonMCheck, pMText, divMRight, buttonMDel, pMDate;
-function addElement(text, date, bool) {
+export function addElement(text, date, bool) {
     divMCell = document.createElement('div');
     divMCell.classList = "main__cell";
     if (bool === true) {
         divMCell.classList.add('check');
-        amount.amountCheck++;
-        pHCompleted.innerHTML = 'Compleeted: ' + amount.amountCheck;
+        pHCompleted.innerHTML = 'Compleeted: ' + ++amount.amountCheck;
     }
 
     buttonMCheck = document.createElement('button');
@@ -33,11 +35,6 @@ function addElement(text, date, bool) {
     divMRight.append(pMDate);
 
     divMContainer.append(divMCell);
-
-    amount.amountTodo++;
-    pHAll.innerHTML = 'All: ' + amount.amountTodo;
+    
+    pHAll.innerHTML = 'All: ' + ++amount.amountTodo;
 }
-
-import { amount } from "./script.js";
-import { divMContainer, pHAll, pHCompleted } from "./createDOM.js";
-export { addElement };

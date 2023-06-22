@@ -7,27 +7,25 @@ if (localStorage.length > 0) {
     fromLocalStorage();
 }
 
-divMContainer.addEventListener('click', (event) => {
-    if (event.target.classList.contains('cell__check')) cellCheck(event.target);
-    if (event.target.classList.contains('cell__delete')) cellDelete(event.target);
+divMContainer.addEventListener('click', ({ target }) => {
+    if (target.classList.contains('cell__check')) cellCheck(target);
+    if (target.classList.contains('cell__delete')) cellDelete(target);
 });
 
-divHContainer.addEventListener('click', (event) => {
-    let et = event.target;
-    if (et.classList.contains('header__add')) addNew();
-    if (et.classList.contains('header__delete-all')) delAll();
-    if (et.classList.contains('header__delete-last')) delLast();
-    if (et.classList.contains('header__show-all')) showAll();
-    if (et.classList.contains('header__show-completed')) showCompleted();
+divHContainer.addEventListener('click', ({ target: { classList } }) => {
+    if (classList.contains('header__add')) addNew();
+    if (classList.contains('header__delete-all')) delAll();
+    if (classList.contains('header__delete-last')) delLast();
+    if (classList.contains('header__show-all')) showAll();
+    if (classList.contains('header__show-completed')) showCompleted();
 });
 
-divHContainer.addEventListener('input', (event) => {
-    let et = event.target;
-    if (et.classList.contains('header__search')) search();
+divHContainer.addEventListener('input', ({ target }) => {
+    if (target.classList.contains('header__search')) search();
 });
 
-divHContainer.addEventListener('keydown', (event) => {
-    if (event.target.classList.contains('header__enter')) {
-        if (event.keyCode === 13) addNew();
+divHContainer.addEventListener('keydown', ({ target, keyCode }) => {
+    if (target.classList.contains('header__enter')) {
+        if (keyCode === 13) addNew();
     }
 });

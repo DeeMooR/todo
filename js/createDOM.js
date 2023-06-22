@@ -1,3 +1,5 @@
+export { divHContainer, divMContainer, inputHEnter, inputHSearch, pHAll, pHCompleted };
+
 const root = document.querySelector('#root');
 
 let sectionHeader = document.createElement('section');
@@ -60,5 +62,3 @@ root.append(sectionMain);
 let divMContainer = document.createElement('div');
 divMContainer.setAttribute('class', 'main__container container');
 sectionMain.append(divMContainer);
-
-export { divHContainer, divMContainer, inputHEnter, inputHSearch, pHAll, pHCompleted };

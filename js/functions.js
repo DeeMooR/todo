@@ -1,4 +1,9 @@
-function cellCheck(et) {
+import { divMContainer, inputHEnter, inputHSearch, pHAll, pHCompleted } from "./createDOM.js";
+import { amount } from "./script.js";
+import { addElement } from "./addElement.js";
+export { cellCheck, cellDelete, addNew, delAll, delLast, showAll, showCompleted, search };
+
+function cellCheck(terget) {
     const arrKeys = Object.keys(localStorage);
     const objAll = {};
     for (let key of arrKeys) {
@@ -6,28 +11,26 @@ function cellCheck(et) {
       objAll[key] = JSON.parse(value);
     }
 
-    if (et.innerHTML === '✓') {
-        et.innerHTML = '';
-        et.parentElement.classList.remove('check');
-        amount.amountCheck--;
-        pHCompleted.innerHTML = 'Compleeted: ' + amount.amountCheck;
+    if (terget.innerHTML === '✓') {
+        terget.innerHTML = '';
+        terget.parentElement.classList.remove('check');
+        pHCompleted.innerHTML = 'Compleeted: ' + --amount.amountCheck;
     } else {
-        et.innerHTML = '✓';
-        et.parentElement.classList.add('check');
-        amount.amountCheck++;
-        pHCompleted.innerHTML = 'Compleeted: ' + amount.amountCheck;
+        terget.innerHTML = '✓';
+        terget.parentElement.classList.add('check');
+        pHCompleted.innerHTML = 'Compleeted: ' + ++amount.amountCheck;
     }
 
     for (let i in objAll) {
-        if (et.nextElementSibling.innerHTML === objAll[i].text) {
-            if (et.innerHTML === '') objAll[i].check = false;
+        if (terget.nextElementSibling.innerHTML === objAll[i].text) {
+            if (terget.innerHTML === '') objAll[i].check = false;
             else objAll[i].check = true;
             let objJSON = JSON.stringify(objAll[i]);  
             localStorage.setItem(i, objJSON);
         }
     }
 }
-function cellDelete(et) {
+function cellDelete(terget) {
     const arrKeys = Object.keys(localStorage);
     const objAll = {};
     for (let key of arrKeys) {
@@ -35,17 +38,15 @@ function cellDelete(et) {
       objAll[key] = JSON.parse(value);
     }
 
-    let check = et.parentElement.previousElementSibling.previousElementSibling;
+    let check = terget.parentElement.previousElementSibling.previousElementSibling;
     if (check.innerHTML === '✓') {
-        amount.amountCheck--;
-        pHCompleted.innerHTML = 'Compleeted: ' + amount.amountCheck;
+        pHCompleted.innerHTML = 'Compleeted: ' + --amount.amountCheck;
     }
-    et.parentElement.parentElement.remove();
-    amount.amountTodo--;
-    pHAll.innerHTML = 'All: ' + amount.amountTodo;
+    terget.parentElement.parentElement.remove();
+    pHAll.innerHTML = 'All: ' + --amount.amountTodo;
 
     for (let i in objAll) {
-        if (et.parentElement.previousElementSibling.innerHTML === objAll[i].text) {
+        if (terget.parentElement.previousElementSibling.innerHTML === objAll[i].text) {
             localStorage.removeItem(i);
         }
     }
@@ -108,12 +109,10 @@ function delLast() {
         }
     }
     if (divMContainer.lastElementChild.firstElementChild.innerHTML === '✓') {
-        amount.amountCheck--;
-        pHCompleted.innerHTML = 'Compleeted: ' + amount.amountCheck;
+        pHCompleted.innerHTML = 'Compleeted: ' + --amount.amountCheck;
     }
     divMContainer.lastElementChild.remove();
-    amount.amountTodo--;
-    pHAll.innerHTML = 'All: ' + amount.amountTodo;
+    pHAll.innerHTML = 'All: ' + --amount.amountTodo;
 }
 function showAll() {
     for (let i of divMContainer.children) {
@@ -154,8 +153,3 @@ function search() {
         }
     }
 }
-
-import { divMContainer, inputHEnter, inputHSearch, pHAll, pHCompleted } from "./createDOM.js";
-import { amount } from "./script.js";
-import { addElement } from "./addElement.js";
-export { cellCheck, cellDelete, addNew, delAll, delLast, showAll, showCompleted, search };
